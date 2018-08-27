@@ -10,6 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * 实现文章排行榜功能（按照发布时间或者投票数进行排序）
+ * 首先是发布文章，会将文章的id与发布时间存入time（zset），同时初始化文章分值（0），方便通过发布时间或者文章分值进行排序
+ * 其次对文章进行投票，将每篇文章的投票人的id存入set（set名为artical：id），不允许多次投票
+ * 如是首次投票，则顺利将score（zset）中文章对应的分值进行更新
+ *
+ */
 @Service
 public class TopServiceImpl {
 
@@ -117,8 +124,5 @@ public class TopServiceImpl {
 			System.out.print(o);
 			System.out.println("    "+redisTemplate.opsForZSet().score("score",o));
 		}
-
 	}
-
-
 }
